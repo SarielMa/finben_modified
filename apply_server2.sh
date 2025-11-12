@@ -1,11 +1,11 @@
 #!/bin/bash
   
 
-#SBATCH --job-name=0shot
+#SBATCH --job-name=2shot
 #SBATCH --mail-type=ALL
 #SBATCH --time=00-10:00:00
 #SBATCH --nodes=1
-#SBATCH --gpus=h200:2
+#SBATCH --gpus=h200:4
 #SBATCH --mem=256G
 #SBATCH --partition=gpu_h200
 #SBATCH --output=%j_gpu_job.txt
@@ -14,4 +14,4 @@
 module load miniconda
 conda activate finben
 cd /home/lm2445/project_pi_sjf37/lm2445/finben/FinBen
-sh run_eppc_0shot.sh
+sh run_eppc_2shot.sh

@@ -1,7 +1,7 @@
 #!/bin/bash
   
 
-#SBATCH --job-name=0shot
+#SBATCH --job-name=1shot
 #SBATCH --mail-type=ALL
 #SBATCH --time=00-10:00:00
 #SBATCH --nodes=1
@@ -14,4 +14,4 @@
 module load miniconda
 conda activate finben
 cd /home/lm2445/project_pi_sjf37/lm2445/finben/FinBen
-sh run_eppc_0shot.sh
+sh run_eppc_1shot.sh
