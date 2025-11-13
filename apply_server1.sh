@@ -12,6 +12,6 @@
 #SBATCH --mail-user=linhai.ma@yale.edu
 
 module load miniconda
-conda activate finben
+conda activate finben_vllm3
 cd /home/lm2445/project_pi_sjf37/lm2445/finben/FinBen
 sh run_eppc_1shot.sh

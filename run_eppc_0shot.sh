@@ -18,6 +18,7 @@ MODELS=(
     #"Qwen/QwQ-32B"
     "google/gemma-2-27b-it"
     "YanAdjeNole/sdoh-llama-3.3-70b"
+    "Qwen/QwQ-32B-AWQ"
     #"deepseek-ai/DeepSeek-R1-Distill-Qwen-32B"
     )
 

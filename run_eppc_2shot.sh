@@ -17,8 +17,9 @@ MODELS=(
     #"plandes/sdoh-llama-3-3-70b"
     # "Qwen/QwQ-32B"
     # "deepseek-ai/DeepSeek-R1-Distill-Qwen-32B"
-    "YanAdjeNole/sdoh-llama-3.3-70b"
     "google/gemma-2-27b-it"
+    "YanAdjeNole/sdoh-llama-3.3-70b"
+    "Qwen/QwQ-32B-AWQ"
     )
 
 
@@ -53,18 +54,10 @@ for MODEL in "${MODELS[@]}"; do
         MAX_LEN=24676
     fi
 
-    # Gemma requires disabling FlashAttention
-    if [[ "$MODEL" == *"gemma"* ]]; then
-        EXTRA_ARGS="enforce_eager=True,disable_custom_kernels=True"
-    else
-        EXTRA_ARGS=""
-    fi
-
     for SHOT in "${SHOTS[@]}"; do
         echo "  -> few-shot: $SHOT (max_model_len=$MAX_LEN)"
-
         lm_eval --model vllm \
-            --model_args "pretrained=$MODEL,tensor_parallel_size=2,gpu_memory_utilization=0.90,max_model_len=$MAX_LEN,$EXTRA_ARGS" \
+            --model_args "pretrained=$MODEL,tensor_parallel_size=2,gpu_memory_utilization=0.90,max_model_len=$MAX_LEN" \
             --tasks EppcExtraction \
             --num_fewshot 2 \
             --batch_size auto \
