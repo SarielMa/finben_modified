@@ -41,39 +41,11 @@ MODELS=(
 #     sleep 3
 # done
 
-# for MODEL in "${MODELS[@]}"; do
-#     echo "running model: $MODEL"
-#     for SHOT in "${SHOTS[@]}"; do
-#         lm_eval --model vllm \
-#             --model_args "pretrained=$MODEL,tensor_parallel_size=1,gpu_memory_utilization=0.90,max_model_len=8192" \
-#             --tasks EppcExtraction \
-#             --num_fewshot 0 \
-#             --batch_size auto \
-#             --output_path results/eppc \
-#             --hf_hub_log_args "hub_results_org=YanAdjeNole,details_repo_name=eppc-0shot,push_results_to_hub=True,push_samples_to_hub=True,public_repo=True" \
-#             --log_samples \
-#             --apply_chat_template \
-#             --include_path ./tasks/eppc
-
-#         sleep 1
-#     done
-#     sleep 3
-# done
-
 for MODEL in "${MODELS[@]}"; do
     echo "running model: $MODEL"
-
-    # ---- ONLY THIS LOGIC IS ADDED ----
-    if [[ "$MODEL" == *"gemma-2"* ]]; then
-        MAX_LEN=4096     # vLLM forces Gemma-2 → 4096
-    else
-        MAX_LEN=8192     # others (Llama/Qwen/etc.) OK with 8192
-    fi
-    # ----------------------------------
-
     for SHOT in "${SHOTS[@]}"; do
         lm_eval --model vllm \
-            --model_args "pretrained=$MODEL,tensor_parallel_size=1,gpu_memory_utilization=0.90,max_model_len=$MAX_LEN" \
+            --model_args "pretrained=$MODEL,tensor_parallel_size=1,gpu_memory_utilization=0.90,max_model_len=8192" \
             --tasks EppcExtraction \
             --num_fewshot 0 \
             --batch_size auto \
@@ -87,6 +59,34 @@ for MODEL in "${MODELS[@]}"; do
     done
     sleep 3
 done
+
+# for MODEL in "${MODELS[@]}"; do
+#     echo "running model: $MODEL"
+
+#     # ---- ONLY THIS LOGIC IS ADDED ----
+#     if [[ "$MODEL" == *"gemma-2"* ]]; then
+#         MAX_LEN=4096     # vLLM forces Gemma-2 → 4096
+#     else
+#         MAX_LEN=8192     # others (Llama/Qwen/etc.) OK with 8192
+#     fi
+#     # ----------------------------------
+
+#     for SHOT in "${SHOTS[@]}"; do
+#         lm_eval --model vllm \
+#             --model_args "pretrained=$MODEL,tensor_parallel_size=1,gpu_memory_utilization=0.90,max_model_len=$MAX_LEN" \
+#             --tasks EppcExtraction \
+#             --num_fewshot 0 \
+#             --batch_size auto \
+#             --output_path results/eppc \
+#             --hf_hub_log_args "hub_results_org=YanAdjeNole,details_repo_name=eppc-0shot,push_results_to_hub=True,push_samples_to_hub=True,public_repo=True" \
+#             --log_samples \
+#             --apply_chat_template \
+#             --include_path ./tasks/eppc
+
+#         sleep 1
+#     done
+#     sleep 3
+# done
 
         
 # output message
