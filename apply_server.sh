@@ -3,7 +3,7 @@
 
 #SBATCH --job-name=0shot
 #SBATCH --mail-type=ALL
-#SBATCH --time=00-10:00:00
+#SBATCH --time=00-5:00:00
 #SBATCH --nodes=1
 #SBATCH --gpus=h200:2
 #SBATCH --mem=256G
