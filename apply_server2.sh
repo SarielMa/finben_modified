@@ -3,9 +3,9 @@
 
 #SBATCH --job-name=2shot
 #SBATCH --mail-type=ALL
-#SBATCH --time=00-10:00:00
+#SBATCH --time=00-15:00:00
 #SBATCH --nodes=1
-#SBATCH --gpus=h200:4
+#SBATCH --gpus=h200:2
 #SBATCH --mem=256G
 #SBATCH --partition=gpu_h200
 #SBATCH --output=%j_gpu_job.txt

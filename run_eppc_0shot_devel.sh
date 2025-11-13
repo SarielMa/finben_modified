@@ -14,11 +14,12 @@ SHOTS=(
 
 ## replace with your models
 MODELS=(
+    #"deepseek-ai/DeepSeek-R1-Distill-Llama-70B"
+    #"Qwen/QwQ-32B"
     #"plandes/sdoh-llama-3-3-70b"
-    # "Qwen/QwQ-32B"
-    # "deepseek-ai/DeepSeek-R1-Distill-Qwen-32B"
-    "YanAdjeNole/sdoh-llama-3.3-70b"
-    "google/gemma-2-27b-it"
+    #"deepseek-ai/DeepSeek-R1-Distill-Qwen-32B"
+    #"google/gemma-2-27b-it"
+    "Qwen/Qwen2.5-1.5B-Instruct"
     )
 
 
@@ -27,12 +28,12 @@ MODELS=(
 #     echo "running model: $MODEL"
 #     for SHOT in "${SHOTS[@]}"; do
 #         lm_eval --model vllm \
-#                  --model_args "pretrained=$MODEL,tensor_parallel_size=2,gpu_memory_utilization=0.90,max_model_len=16384" \
+#                  --model_args "pretrained=$MODEL,tensor_parallel_size=2,gpu_memory_utilization=0.90,max_model_len=8192" \
 #                  --tasks EppcExtraction \
-#                  --num_fewshot 1 \
+#                  --num_fewshot 0 \
 #                  --batch_size auto \
 #                  --output_path results/eppc \
-#                  --hf_hub_log_args "hub_results_org=YanAdjeNole,details_repo_name=eppc-1shot,push_results_to_hub=True,push_samples_to_hub=True,public_repo=True" \
+#                  --hf_hub_log_args "hub_results_org=YanAdjeNole,details_repo_name=eppc-0shot,push_results_to_hub=True,push_samples_to_hub=True,public_repo=True" \
 #                  --log_samples \
 #                  --apply_chat_template \
 #                  --include_path ./tasks/eppc
@@ -41,33 +42,16 @@ MODELS=(
 #     sleep 3
 # done
 
-
 for MODEL in "${MODELS[@]}"; do
     echo "running model: $MODEL"
-
-    # set max length depending on model
-    if [[ "$MODEL" == *"gemma"* || "$MODEL" == *"sdoh-llama-3.3"* ]]; then
-        MAX_LEN=8192
-    else
-        MAX_LEN=16384
-    fi
-
-    # Gemma requires disabling FlashAttention
-    if [[ "$MODEL" == *"gemma"* ]]; then
-        EXTRA_ARGS="enforce_eager=True,disable_custom_kernels=True"
-    else
-        EXTRA_ARGS=""
-    fi
-
     for SHOT in "${SHOTS[@]}"; do
-        echo "  -> few-shot: $SHOT (max_model_len=$MAX_LEN)"
         lm_eval --model vllm \
-            --model_args "pretrained=$MODEL,tensor_parallel_size=2,gpu_memory_utilization=0.90,max_model_len=$MAX_LEN,$EXTRA_ARGS" \
+            --model_args "pretrained=$MODEL,tensor_parallel_size=1,gpu_memory_utilization=0.90,max_model_len=8192,enforce_eager=True,disable_custom_all_reduce=True" \
             --tasks EppcExtraction \
-            --num_fewshot 1 \
+            --num_fewshot 0 \
             --batch_size auto \
             --output_path results/eppc \
-            --hf_hub_log_args "hub_results_org=YanAdjeNole,details_repo_name=eppc-${SHOT}shot,push_results_to_hub=True,push_samples_to_hub=True,public_repo=True" \
+            --hf_hub_log_args "hub_results_org=YanAdjeNole,details_repo_name=eppc-0shot,push_results_to_hub=True,push_samples_to_hub=True,public_repo=True" \
             --log_samples \
             --apply_chat_template \
             --include_path ./tasks/eppc
