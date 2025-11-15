@@ -3,7 +3,7 @@
 
 #SBATCH --job-name=0shot
 #SBATCH --mail-type=ALL
-#SBATCH --time=00-5:00:00
+#SBATCH --time=00-10:00:00
 #SBATCH --nodes=1
 #SBATCH --gpus=h200:2
 #SBATCH --mem=256G
@@ -12,6 +12,6 @@
 #SBATCH --mail-user=linhai.ma@yale.edu
 
 module load miniconda
-conda activate vllm_gemma
+conda activate finben_vllm3
 cd /home/lm2445/project_pi_sjf37/lm2445/finben/FinBen
 sh run_eppc_0shot.sh

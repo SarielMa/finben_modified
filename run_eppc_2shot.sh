@@ -14,12 +14,12 @@ SHOTS=(
 
 ## replace with your models
 MODELS=(
-    #"plandes/sdoh-llama-3-3-70b"
-    # "Qwen/QwQ-32B"
-    # "deepseek-ai/DeepSeek-R1-Distill-Qwen-32B"
+    #"deepseek-ai/DeepSeek-R1-Distill-Llama-70B"
+    #"Qwen/QwQ-32B"
     "google/gemma-2-27b-it"
     "YanAdjeNole/sdoh-llama-3.3-70b"
     "Qwen/QwQ-32B-AWQ"
+    "deepseek-ai/DeepSeek-R1-Distill-Qwen-32B"
     )
 
 
@@ -61,8 +61,8 @@ for MODEL in "${MODELS[@]}"; do
             --tasks EppcExtraction \
             --num_fewshot 2 \
             --batch_size auto \
-            --output_path results/eppc \
-            --hf_hub_log_args "hub_results_org=YanAdjeNole,details_repo_name=eppc-${SHOT}shot,push_results_to_hub=True,push_samples_to_hub=True,public_repo=True" \
+            --output_path results/eppc2 \
+            --hf_hub_log_args "hub_results_org=YanAdjeNole,details_repo_name=eppc-2shot,push_results_to_hub=True,push_samples_to_hub=True,public_repo=True" \
             --log_samples \
             --apply_chat_template \
             --include_path ./tasks/eppc
