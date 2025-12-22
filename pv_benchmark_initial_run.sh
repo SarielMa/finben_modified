@@ -1,7 +1,7 @@
 #!/bin/bash
 
 lm_eval --model vllm \
-  --model_args "pretrained=meta-llama/Llama-3.1-8B-Instruct,tensor_parallel_size=1,gpu_memory_utilization=0.90,max_model_len=4096" \
+  --model_args "pretrained=meta-llama/Llama-3.1-8B-Instruct,tensor_parallel_size=1,gpu_memory_utilization=0.90,max_model_len=8192" \
   --tasks PvExtraction_full \
   --num_fewshot 0 \
   --batch_size 1 \
@@ -10,6 +10,16 @@ lm_eval --model vllm \
   --apply_chat_template \
   --include_path ./tasks/pv_miner
 
+lm_eval --model hf \
+  --model_args "pretrained=Qwen/Qwen2.5-1.5B-Instruct" \
+  --tasks PvExtraction_full \
+  --num_fewshot 0 \
+  --device cuda:0 \
+  --batch_size 1 \
+  --output_path results/PV_initial\
+  --log_samples \
+  --apply_chat_template \
+  --include_path ./tasks/pv_miner
 
 # Run the Hugging Face LLM evaluation command
 # lm_eval --model hf \
@@ -38,4 +48,4 @@ lm_eval --model vllm \
 #         #--apply_chat_template \
 
 # output message
-echo "Evaluation completed successfully!"
+#echo "Evaluation completed successfully!"
