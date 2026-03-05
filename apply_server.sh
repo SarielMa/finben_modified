@@ -1,7 +1,7 @@
 #!/bin/bash
   
 
-#SBATCH --job-name=0shot_pv
+#SBATCH --job-name=0shot_pv_all
 #SBATCH --mail-type=ALL
 #SBATCH --time=00-10:00:00
 #SBATCH --nodes=1
@@ -14,4 +14,4 @@
 module load miniconda
 conda activate finben_vllm3
 cd /home/lm2445/project_pi_sjf37/lm2445/finben/FinBen
-sh pv_benchmark_initial_run.sh
+sh pv_benchmark_initial_run_all.sh

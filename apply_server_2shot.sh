@@ -1,9 +1,9 @@
 #!/bin/bash
   
 
-#SBATCH --job-name=2shot
+#SBATCH --job-name=2shot_pv
 #SBATCH --mail-type=ALL
-#SBATCH --time=00-20:00:00
+#SBATCH --time=00-10:00:00
 #SBATCH --nodes=1
 #SBATCH --gpus=h200:2
 #SBATCH --mem=256G
@@ -14,4 +14,4 @@
 module load miniconda
 conda activate finben_vllm3
 cd /home/lm2445/project_pi_sjf37/lm2445/finben/FinBen
-sh run_eppc_2shot.sh
+sh pv_benchmark_initial_run_2shot.sh
